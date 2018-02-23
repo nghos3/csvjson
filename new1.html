@@ -1,0 +1,40 @@
+ <!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+</style>
+<body>
+
+<!-- load the d3.js library -->     
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+// set the dimensions and margins of the graph
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+ entries = d3.entries(data);
+
+  var colors = d3.scale.category20()
+    .domain(d3.keys(data));
+
+  var line = d3.svg.line()
+    .interpolate("basis")
+    .x(function(d) { return x(d.region) })
+    .y(function(d) { return y(d.fat) });
+
+  svg1.selectAll(".line")
+    .data(entries)
+  .enter().append("path")
+    .attr("class", "line")
+    // function(d), not just line function 
+    .attr("d", function(d){ return  line(d.value); })
+    .attr("stroke", function(d) { return colors(d.key) });
+
+</script>
+</body>

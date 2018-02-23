@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+/* set the CSS */
+
+.line1 {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2px;
+}
+
+.line2 {
+    fill: none;
+    stroke: green;
+    stroke-width: 2px;
+}
+
+.line3 {
+    fill: none;
+    stroke: red;
+    stroke-width: 2px;
+}
+</style>
+
+<body>
+    <!-- load the d3.js library -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+    // set the dimensions and margins of the graph
+    var margin = { top: 20, right: 20, bottom: 60, left: 50 },
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top -margin.bottom;
+
+    // parse the date / time
+    //var parseTime = d3.timeParse("%Y");
+
+    // set the ranges
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().range([height, 0]);
+
+    // define the line
+    var valueline = d3.line()
+        .x(function(d) { return x(d.region); })
+        .y(function(d) { return y(d.fat); });
+    // define the line
+    var valueline2 = d3.line()
+        .x(function(d) { return x(d.region); })
+        .y(function(d) { return y(d.carbohydrates); });
+
+    // define the line
+    var valueline3 = d3.line()
+        .x(function(d) { return x(d.region); })
+        .y(function(d) { return y(d.protein); });
+
+    // append the svg obgect to the body of the page
+    // appends a 'group' element to 'svg'
+    // moves the 'group' element to the top left margin
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+
+    var regArr = ["North Europe", "Central Europe", "South Europe "];
+    var a = 100;
+
+    var tick = document.getElementsByClassName("tick");
+    // var value = tick.childNodes[0].nodeValue;
+    //console.log(value);
+
+
+
+    function draw(data) {
+
+        //var data = data[country];
+
+        // format the data
+        data.forEach(function(d) {
+            if (regArr.indexOf(d.region) >= 0) {
+                d.region = a;
+                console.log(d.region);
+                a += 100;
+            }
+            d.fat = d.fat;
+            d.carbohydrates = d.carbohydrates;
+            d.protein = d.protein;
+        });
+
+
+        x.domain(d3.extent(data, function(d) { return d.region; }));
+        y.domain([0, d3.max(data, function(d) {
+            return Math.max(d.fat, d.carbohydrates, d.protein);
+        })]);
+
+         
+         
+        // Add the valueline path.
+        svg.append("path")
+            .data([data])
+            .attr("class", "line1")
+            .attr("stroke", "green")
+            .text("line1")
+            .attr("d", valueline);
+        // Add the valueline path.
+        svg.append("path")
+            .data([data])
+            .attr("class", "line2")
+            .text("line2")
+            .attr("d", valueline2);
+
+        svg.append("path")
+            .data([data])
+            .attr("class", "line3")
+            .attr("d", valueline3);
+        // Add the X Axis
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+
+        svg.append("text")
+           .attr("transform", "translate(" + (width + 3) + "," + y(data[0].fat) + ")")
+           .attr("dy", "-11em")
+           .attr("dx", "-22em")
+           .attr("text-anchor", "middle")
+           .style("fill", "steelblue")
+           .text("fat");
+
+       svg.append("text")
+           .attr("transform", "translate(" + (width + 3) + "," + y(data[0].fat) + ")")
+           .attr("dy", "-23em")
+           .attr("dx", "-20em")
+           .attr("text-anchor", "middle")
+           .style("fill", "green")
+           .text("carbohydrates");
+
+       svg.append("text")
+           .attr("transform", "translate(" + (width + 4) + "," + y(data[0].fat) + ")")
+           .attr("dy", "-6em")
+           .attr("dx","-21em")
+           .attr("text-anchor", "middle")
+           .style("fill", "red")
+           .text("protein");    
+      
+       svg.append("text")
+           .attr("transform", "translate(" + (width + 3) + "," + y(data[0].fat) + ")")
+           .attr("dy", "3em")
+           .attr("dx", "-52em")
+           .attr("text-anchor", "middle")
+           .style("fill", "Black")
+           .text("North Europe");
+
+  svg.append("text")
+           .attr("transform", "translate(" + (width + 3) + "," + y(data[0].fat) + ")")
+           .attr("dy", "3em")
+           .attr("dx", "-28em")
+           .attr("text-anchor", "middle")
+           .style("fill", "Black")
+           .text("Central Europe");
+
+           svg.append("text")
+           .attr("transform", "translate(" + (width + 3) + "," + y(data[0].fat) + ")")
+           .attr("dy", "3em")
+           .attr("dx", "-4em")
+           .attr("text-anchor", "middle")
+           .style("fill", "Black")
+           .text("South Europe");
+
+
+
+          
+        // Add the Y Axis
+        svg.append("g")
+            .call(d3.axisLeft(y));
+    }
+    // Get the data
+    d3.json("multig.json", function(error, data) {
+        if (error) throw error;
+
+        // trigger render
+        draw(data);
+    });
+    </script>
+</body>
