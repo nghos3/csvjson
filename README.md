@@ -1,5 +1,7 @@
 
---------------------------------------------------------ASSIGNMENT-------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+                                                                      ASSIGNMENT
+-----------------------------------------------------------------------------------------------------------------------------------------
 Part 1: Data Munging
 1.Write a Nodejs program that converts the csv file into a json file that will be used to plot data in part 
 2. You have to come up with an optimal schema for the json file based on the requirements of Part 2.
@@ -20,7 +22,6 @@ North Europe (United Kingdom, Denmark, Sweden and Norway)
 Central Europe (France, Belgium, Germany, Switzerland and Netherlands)
 South Europe (Portugal, Greece, Italy, Spain, Croatia and Albania).
 Create a multi-series line depicting Fat, Protein and Carbohydrate consumption across the above regions of Europe. 
----------------------------------------------END ASSIGNMENT--------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------------------------
                                              INSTRUCTIONS
@@ -29,4 +30,4 @@ Create a multi-series line depicting Fat, Protein and Carbohydrate consumption a
 -you have to extract the csv as it is in tar format(cannot be used)
 -extract the csv file in the folder itself
 -run  "node converter.js" in node module for conversion of csv to json
--now invoke http-server to check the graph 
+-now invoke http-server to check the graph (index.html)
