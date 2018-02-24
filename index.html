@@ -2,9 +2,38 @@
 <html>
 <head>
 	<title>graph</title>
+	<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="style.css">
+<style >
+/* set the CSS */
+
+ 
+  .bar{
+    fill:blue;
+  }
+
+  .bar:hover{
+    fill: brown;
+  }
+
+	.axis {
+	  font: 10px sans-serif;
+	}
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+</style>
+<!-- <script src="//d3js.org/d3.v4.min.js"></script> -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/javascript" src="bar.js"></script>
+<script type="text/javascript" src="multi.js"></script>
 </head>
-<body>
-<iframe src="new.html" style="height: "> <br></iframe>
-<iframe src="new2.html" style="height: "><br></iframe>
+<body onload= "fn();multi();">
+
 </body>
 </html>
